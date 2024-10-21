@@ -1,4 +1,4 @@
-**Decentralized Storage Sharing Platform**
+![image](https://github.com/user-attachments/assets/808fd796-6780-4a76-a8e5-85325f432fed)**Decentralized Storage Sharing Platform**
 
 **Project Overview**
 
