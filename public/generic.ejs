@@ -1,0 +1,194 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Generic - Solid State by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="style.css" />
+		<noscript><link rel="stylesheet" href="noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="DStorage.html">Solid State</a></h1>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+				<nav id="menu">
+					<div class="inner">
+						<h2>Menu</h2>
+						<ul class="links">
+							<li><a href="DStorage.html">Home</a></li>
+							<li><a href="generic">Purchase storage</a></li>
+							<li><a href="elements.html">Provide storage</a></li>
+							<li><a href="login.html">Log In</a></li>
+							<li><a href="login.html">Sign Up</a></li>
+						</ul>
+						<a href="#" class="close">Close</a>
+					</div>
+				</nav>
+
+					<section id="wrapper">
+						<header>
+							<div class="inner">
+								<h2>Purchase storage</h2>
+								<p>On this page, you can purchase or rent storage for personal use</p>
+							</div>
+					
+							<div class="wrapper">
+								<div class="inner">
+									<h2>Listings</h2>
+									<div id="listings">
+										<% listings.forEach(function(listing, index) { %>
+											<div class="listing" id="listing-<%= index %>">
+											  <p>Provider: <%= listing.name %></p>
+											  <p>Storage: <%= listing.space %> GB</p>
+											  <p>Price: <%= listing.price %> ETH</p>
+											  <button class="select-btn" onclick="buyStorage('<%= index %>', '<%= listing.space %>', '<%= listing.price %>')">Select</button>
+											</div>
+										<% }); %>
+									</div>
+								</div>
+							</div>
+					</section>
+
+				<!-- Footer -->
+				<section id="footer">
+					<div class="inner">
+						<h2 class="major">Get in touch</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tincidunt.</p>
+						<ul class="contact">
+							<li class="icon solid fa-home">Untitled Inc<br />1234 Somewhere Road<br />Nashville, TN 00000-0000</li>
+							<li class="icon solid fa-phone">(000) 000-0000</li>
+							<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
+						</ul>
+						<ul class="copyright">
+							<li>&copy; Untitled Inc. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						</ul>
+					</div>
+				</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="jquery.min.js"></script>
+			<script src="jquery.scrollex.min.js"></script>
+			<script src="browser.min.js"></script>
+			<script src="breakpoints.min.js"></script>
+			<script src="util.js"></script>
+			<script src="main.js"></script>
+			<script src="/app.js"></script>
+			<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js"></script>
+
+<script>
+    // Подключение к MetaMask и отправка транзакции
+    async function connectToMetaMask() {
+        if (typeof window.ethereum !== 'undefined') {
+            try {
+                await ethereum.request({ method: 'eth_requestAccounts' });
+                const web3 = new Web3(window.ethereum);
+                console.log('MetaMask подключен');
+                return web3;
+            } catch (error) {
+                console.error("Отказано в доступе к MetaMask", error);
+            }
+        } else {
+            alert('MetaMask необходим для взаимодействия с сетью Ethereum');
+        }
+    }
+
+    // Функция для удаления объявления
+    function removeListing(index) {
+        const listing = document.getElementById(`listing-${index}`);
+        if (listing) {
+            listing.remove(); // Удаление объявления из DOM
+        }
+    }
+
+    // Функция для покупки места на контракте
+    async function buyStorage(index, space, price) {
+        const web3 = await connectToMetaMask();
+        if (!web3) return;
+
+        const accounts = await web3.eth.getAccounts();
+        const userAddress = accounts[0];
+        const contractABI = [
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_totalStorage",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_pricePerByte",
+                    "type": "uint256"
+                }
+            ],
+            "name": "registerProvider",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_providerId",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_storageAmount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "rentStorage",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_providerId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "withdrawEarnings",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        }
+    ];
+
+    const contractAddress = "0xC967CCf7a90709060429C55Fc71264D10eB90663";  // Адрес смарт-контракта
+    const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+    const totalCostInWei = web3.utils.toWei(price.toString(), 'ether');
+
+    // Вызываем метод контракта для аренды места
+    try {
+        await contract.methods.rentStorage(index, space).send({
+            from: userAddress,
+            value: totalCostInWei
+        });
+        alert('Транзакция прошла успешно!');
+        removeListing(index); // Удаление объявления из списка после успешной транзакции
+    } catch (error) {
+        console.error('Ошибка транзакции:', error);
+        alert('Транзакция не удалась. Проверьте консоль для деталей.');
+    }
+}
+</script>
+	</body>
+</html>

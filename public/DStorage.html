@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<!--
+	Solid State by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Decentralized Storage sharing platform</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="style.css" />
+		<noscript><link rel="stylesheet" href="noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header" class="alt">
+						<h1><a href="index.html">Solid State</a></h1>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+				<nav id="menu">
+					<div class="inner">
+						<h2>Menu</h2>
+						<ul class="links">
+							<li><a href="DStorage.html">Home</a></li>
+							<li><a href="generic">Purchase storage</a></li>
+							<li><a href="elements.html">Provide storage</a></li>
+							<li><a href="login.html">Log In</a></li>
+							<li><a href="login.html">Sign Up</a></li>
+						</ul>
+						<a href="#" class="close">Close</a>
+					</div>
+				</nav>
+
+				<!-- Banner -->
+					<section id="banner">
+						<div class="inner">
+							<div class="logo"><span class="icon fa-gem"></span></div>
+							<h2>Decentralized Storage sharing platform</h2>
+							<p>decentralized platform where users can rent out unused storage space on their
+                                devices and others can use it to store their files securely and affordably.</p>
+						</div>
+					</section>
+
+					<section id="wrapper">
+						<!-- Four -->
+							<section id="four" class="wrapper alt style1">
+								<div class="inner">
+									<h2 class="major">Select an option</h2>
+									<p>depending on your choice, you will be redirected to the appropriate page</p>
+									<section class="features">
+										<article>
+											<a href="#" class="image"><img src="images/pic04.jpg" alt="" /></a>
+											<h3 class="major"> Storage provider</h3>
+											<p>If you have free space on your device that you can rent out to others, then please go here</p>
+											<a href="elements.html" class="special">here</a>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic05.jpg" alt="" /></a>
+											<h3 class="major">Storage renter</h3>
+											<p>if you need paid storage for personal use, go here</p>
+											<a href="generic" class="special">here</a>
+										</article>
+									</section>
+									<ul class="actions">
+										<li><a href="DStorage.html" class="button">Home page</a></li>
+									</ul>
+								</div>
+							</section>
+
+					</section>
+
+					<section id="add-supply" class="wrapper alt style1">
+						<div class="inner">
+							<h2 class="major">Добавить предложение</h2>
+							<form action="/submit-supply" method="POST">
+								<label for="name">Название:</label>
+								<input type="text" name="name" id="name" required>
+					
+								<label for="space">Пространство (GB):</label>
+								<input type="number" name="space" id="space" required>
+					
+								<label for="price">Цена (ETH):</label>
+								<input type="number" name="price" id="price" required>
+					
+								<button type="submit">Добавить предложение</button>
+							</form>
+						</div>
+					</section>
+					
+
+				<!-- Footer -->
+					<section id="footer">
+						<div class="inner">
+							<h2 class="major">Get in touch</h2>
+							<p>Cras mattis ante fermentum, malesuada neque vitae, eleifend erat. Phasellus non pulvinar erat. Fusce tincidunt, nisl eget mattis egestas, purus ipsum consequat orci, sit amet lobortis lorem lacus in tellus. Sed ac elementum arcu. Quisque placerat auctor laoreet.</p>
+							<form method="post" action="#">
+								<div class="fields">
+									<div class="field">
+										<label for="name">Name</label>
+										<input type="text" name="name" id="name" />
+									</div>
+									<div class="field">
+										<label for="email">Email</label>
+										<input type="email" name="email" id="email" />
+									</div>
+									<div class="field">
+										<label for="message">Message</label>
+										<textarea name="message" id="message" rows="4"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send Message" /></li>
+								</ul>
+							</form>
+							<ul class="contact">
+								<li class="icon solid fa-home">
+									Untitled Inc<br />
+									1234 Somewhere Road Suite #2894<br />
+									Nashville, TN 00000-0000
+								</li>
+								<li class="icon solid fa-phone">(000) 000-0000</li>
+								<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
+								<li class="icon brands fa-twitter"><a href="#">twitter.com/untitled-tld</a></li>
+								<li class="icon brands fa-facebook-f"><a href="#">facebook.com/untitled-tld</a></li>
+								<li class="icon brands fa-instagram"><a href="#">instagram.com/untitled-tld</a></li>
+							</ul>
+							<ul class="copyright">
+								<li>&copy; Untitled Inc. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</section>
+
+
+
+<!-- Scripts -->
+<script src="jquery.min.js"></script>
+<script src="jquery.scrollex.min.js"></script>
+<script src="browser.min.js"></script>
+<script src="breakpoints.min.js"></script>
+<script src="util.js"></script>
+<script src="main.js"></script>
+<script src="/app.js"></script>
+<script>
+// Убедитесь, что функции registerProvider и rentStorage определены ранее в этом файле
+document.getElementById('offerStorageForm').onsubmit = async (event) => {
+    event.preventDefault();
+    const totalStorage = document.getElementById('totalStorage').value;
+    const pricePerByte = document.getElementById('pricePerByte').value;
+    await registerProvider(totalStorage, pricePerByte);
+};
+
+document.getElementById('rentStorageForm').onsubmit = async (event) => {
+    event.preventDefault();
+    const providerId = document.getElementById('providerId').value;
+    const storageAmount = document.getElementById('storageAmount').value;
+    await rentStorage(providerId, storageAmount);
+};
+</script>
+
+    </script>
+</body>
+</html>
