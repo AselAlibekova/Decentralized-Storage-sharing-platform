@@ -1,6 +1,7 @@
-![image](https://github.com/user-attachments/assets/808fd796-6780-4a76-a8e5-85325f432fed)**Decentralized Storage Sharing Platform**
+**Decentralized Storage Sharing Platform**
 
 **Project Overview**
+![image](https://github.com/user-attachments/assets/fb1b1c26-5034-4848-b53e-37f24c313e87)
 
 The Decentralized Storage Sharing Platform is a blockchain-based dApp that allows users to rent storage space or offer their own storage for others to rent. By utilizing Ethereum smart contracts, the platform ensures secure and transparent storage transactions between users without the need for intermediaries. Users can pay for storage using cryptocurrency (ETH), and providers can list their available storage space with specific pricing and capacity. All transactions are handled by a smart contract, which guarantees payment and service execution.
 
@@ -19,6 +20,9 @@ MetaMask Integration: Transactions are performed through MetaMask to ensure safe
 Responsive Design: A user-friendly web interface built with EJS and Node.js for seamless interaction with the dApp.
 
 **How it Works:**
+![image](https://github.com/user-attachments/assets/808fd796-6780-4a76-a8e5-85325f432fed)
+![image](https://github.com/user-attachments/assets/55d28c3c-b392-46ac-b3fb-9bc36ad8d067)
+
 
 Sign Up / Log In: Users register or log in using email and password.
 
